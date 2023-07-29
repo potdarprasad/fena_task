@@ -62,7 +62,14 @@ Follow this steps to run app:
 
 ## Running the App Locally
 
-Before running the app, make sure that you have installed redis and rabbitmq locally.
+## Prerequisites
+
+Before running the application, you need to have the following installed on your machine:
+
+1. **Redis**: To install Redis, follow the instructions provided in the [Redis official website](https://redis.io/download).
+
+2. **RabbitMQ**: To install RabbitMQ, follow the instructions provided in the [RabbitMQ official website](https://www.rabbitmq.com/download.html).
+
 
 ### Backend
 
