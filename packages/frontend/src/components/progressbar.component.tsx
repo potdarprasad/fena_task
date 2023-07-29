@@ -15,6 +15,10 @@ const ProgressBarComponent: React.FC<ProgressBarProps> = ({ totalCount, sentCoun
         setProgressPercentage(percentage);
     }, [sentCount, totalCount]);
 
+    useEffect(() => {
+        setProgressPercentage(0);
+    }, []);
+
     return (
         <Col md={6} className="pe-0">
             <div className="form-left h-100 py-5 px-5">

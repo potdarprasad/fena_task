@@ -4,10 +4,10 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import './App.css';
 import io, { Socket } from 'socket.io-client';
 import axios from 'axios';
-import MailerForm from './components/mailerform';
+import MailerForm from './components/MailerForm.component';
 import { Col, Container, Row } from 'react-bootstrap';
-import ProgressBarComponent from './components/progressbar.component';
-import RightColumnComponent from './components/rightcolumn.component';
+import ProgressBarComponent from './components/ProgressBar.component';
+import RightColumnComponent from './components/RightColumn.component';
 
 const ServerUrl = 'http://localhost:4000';
 const SocketUrl = 'http://localhost:4000';
@@ -18,12 +18,16 @@ function App() {
   const [totalCount, setTotalCount] = useState<number>(0);
   const [sentCount, setSentCount] = useState<number>(0);
   const socketRef = useRef<Socket | null>(null);
+  const ACTIVE_JOB_ID_LOCAL_STORAGE_KEY = 'activeJobId';
+  const TOTAL_COUNT_LOCAL_STORAGE_KEY = 'totalCount';
+  const EMAIL_SENT_EVENT = 'email_sent_event';
+  const CONNECTION_CLOSE_EVENT = 'close_connection';
 
   useEffect(() => {
-    const savedClientId = localStorage.getItem('activeJobId');
+    const savedClientId = localStorage.getItem(ACTIVE_JOB_ID_LOCAL_STORAGE_KEY);
 
     if (savedClientId) {
-      const mailTotalCount = localStorage.getItem('totalCount');
+      const mailTotalCount = localStorage.getItem(TOTAL_COUNT_LOCAL_STORAGE_KEY);
       setTotalCount(parseInt(mailTotalCount ?? '', 10));
       setJobId(savedClientId);
       initSocketConnection(savedClientId);
@@ -45,7 +49,7 @@ function App() {
       query: { jobId }
     });
 
-    socketRef.current.on(`message`, ({ count }: { count: number }) => {
+    socketRef.current.on(EMAIL_SENT_EVENT, ({ count }: { count: number }) => {
       setSentCount(+count);
     });
   };
@@ -63,8 +67,8 @@ function App() {
 
       const response = await axios.post(`${ServerUrl}/api/mailer`, { count });
       const { jobId } = response.data.payload;
-      localStorage.setItem('activeJobId', jobId);
-      localStorage.setItem('totalCount', count.toString());
+      localStorage.setItem(ACTIVE_JOB_ID_LOCAL_STORAGE_KEY, jobId);
+      localStorage.setItem(TOTAL_COUNT_LOCAL_STORAGE_KEY, count.toString());
       setJobId(jobId);
       initSocketConnection(jobId);
     } catch (error) {
@@ -74,9 +78,9 @@ function App() {
   };
 
   const reset = async () => {
-    await socketRef.current?.emit('join', { jobId });
-    localStorage.setItem('activeJobId', '');
-    localStorage.setItem('totalCount', '');
+    await socketRef.current?.emit(CONNECTION_CLOSE_EVENT, { jobId });
+    localStorage.setItem(ACTIVE_JOB_ID_LOCAL_STORAGE_KEY, '');
+    localStorage.setItem(TOTAL_COUNT_LOCAL_STORAGE_KEY, '');
     setJobId('');
     setTotalCount(0);
     closeSocketConnection();

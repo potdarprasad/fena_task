@@ -17,7 +17,7 @@ export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   async handleConnection(client: Socket) {
     const { clientId, count } = await this.gatewayService.initConnection(client);
-    this.server.to(clientId).emit('message', { count });
+    this.server.to(clientId).emit('email_sent_event', { count });
   }
 
   async updateDataForClient(jobId: string, count: number) {
@@ -25,18 +25,14 @@ export class AppGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     await this.gatewayService.incrementMailSentCountForJob(jobId);
     if (clientId) {
-      this.server.to(clientId).emit('message', {count});
+      this.server.to(clientId).emit('email_sent_event', {count});
     } else {
       this.logger.warn(`Client for job ${jobId} is not connected.`);
     }
   }
 
-  @SubscribeMessage('join')
+  @SubscribeMessage('close_connection')
   async handleJoinEvenet(client: Socket, payload: any) {
-    console.log('***', payload);
     await this.gatewayService.deleteJob(payload.jobId);
-    console.log(await this.gatewayService.getClientIdForJob(payload.jobId), '****');
-    //TODO: add code here
-    return {data: 'test'};
   }
 }

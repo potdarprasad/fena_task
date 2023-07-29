@@ -5,7 +5,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 
 const schema = yup.object().shape({
-    number: yup.string().required('Number is required'),
+    number: yup.number()
+        .typeError('Please enter valid number')
+        .required('Please enter valid number')
+        .positive('Please enter a positive number')
+        .integer('Please enter an integer'),
 });
 
 type Props = {
@@ -26,9 +30,8 @@ function MailerForm(props: Props) {
     });
 
     const onSubmit = async (data: any) => {
-
         const { number } = data;
-        await processSendMail(+number);
+        await processSendMail(number);
     };
 
     return (
