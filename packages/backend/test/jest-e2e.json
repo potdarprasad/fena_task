@@ -1,0 +1,23 @@
+{
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "moduleNameMapper": {
+    "@/redis-client/(.*)": "<rootDir>/../libs/redis-client/src/$1",
+    "@/redis-client": "<rootDir>/../libs/redis-client/src",
+    "@/helpers/(.*)": "<rootDir>/../libs/helpers/src/$1",
+    "@/helpers": "<rootDir>/../libs/helpers/src",
+    "@/rabbitmq/(.*)": "<rootDir>/../libs/rabbitmq/src/$1",
+    "@/rabbitmq": "<rootDir>/../libs/rabbitmq/src",
+    "@/logger/(.*)": "<rootDir>/../libs/logger/src/$1",
+    "@/logger": "<rootDir>/../libs/logger/src"
+  }
+}
