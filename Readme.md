@@ -82,4 +82,4 @@ To run the frontend of the application, follow these steps:
 3. Start the development server: `yarn start` (or `npm start`)
 4. The frontend should now be accessible at `http://localhost:3000` in your web browser.
 
-## TODO: Setting up Authentication
+## TODO: Setting up Authentication (if required)
