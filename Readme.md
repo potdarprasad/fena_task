@@ -17,6 +17,8 @@ The Fena Task application is built using the following technologies:
 
 - React: A popular JavaScript library for building user interfaces, providing a fast and interactive frontend experience.
 
+- Socket.IO: A library that enables real-time bidirectional communication between the server and connected clients using WebSockets.
+
 
 ## Task Requirements
 1. Input Box for Email Count: The frontend provides a simple input box where the user can enter the number of emails to send (e.g., 100000) and a "Send" button to initiate the process.
