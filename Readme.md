@@ -1,5 +1,5 @@
 # Fena Task
-![Demo video](demo/Fena_TASK_DEMO.webm)
+![Demo video](demo/Fena_TASK_DEMO.mp4)
 
 ## Description
 Fena Task is a web application that all ows users to trigger the sending of a large number of emails through a simple input box and send button on the frontend. The application follows a distributed and asynchronous approach to handle email sending efficiently.
